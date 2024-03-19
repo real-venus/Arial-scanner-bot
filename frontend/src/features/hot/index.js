@@ -99,11 +99,7 @@ function Hot() {
                         </table>
                     </div>
                     {
-                        hot_data == "ok" && !fnial_data.length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />There are currently no Short Signals showing a 2% difference in token price over 3 minutes.</p>
-                    }
-                    {
-                        hot_data != "ok" && !fnial_data.length &&
-                        <p className="mt-[100px] text-center text-2xl font-bold m-auto">Fetching data ...<br /><LoadingOutlined style={{ fontSize: 24 }} spin /></p>
+                        !fnial_data.length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />There are currently no Short Signals showing a 0.5% difference in token price over 3 minutes.</p>
                     }
                 </TitleCard>
             </div>

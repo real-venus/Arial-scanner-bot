@@ -54,11 +54,12 @@ function HotSignal(hot){
                 </table>
             </div>
             {
-                data.status == "ok" && !data_update.length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭</p>
-            }
-            {
-                data.status != "ok" && !data_update.length && 
-                <p className="mt-[100px] text-center text-2xl font-bold m-auto">Fetching data ...<br /><LoadingOutlined style={{ fontSize: 24 }} spin /></p>
+                !data_update.length && 
+                <p className="mt-[100px] text-center text-2xl font-bold m-auto">
+                    Now, No Matching Data  😭<br />
+                    if there are long signal data,it will display.
+                    please wait. 
+                </p>
             }
         </TitleCard>
     )
