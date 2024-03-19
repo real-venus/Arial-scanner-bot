@@ -57,7 +57,7 @@ function HotSignal(hot){
                 !data_update.length && 
                 <p className="mt-[100px] text-center text-2xl font-bold m-auto">
                     Now, No Matching Data  😭<br />
-                    if there are long signal data,it will display.
+                    if there are hot signal data,it will display.
                     please wait. 
                 </p>
             }

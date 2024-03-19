@@ -90,7 +90,7 @@ function Long() {
                         </table>
                     </div>
                     {
-                        !Object.keys(data).length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />There are currently no Short Signals showing a 0.5% difference in token price over 3 minutes.</p>
+                        !Object.keys(data).length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />There are currently no Short Signals showing a 0.5% difference in token price over 3 minutes.<br />please wait.</p>
                     }
                 </TitleCard>
             </div>

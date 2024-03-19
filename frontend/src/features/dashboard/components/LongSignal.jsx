@@ -65,7 +65,7 @@ function LongSignal(long){
             {
                 !Object.keys(data).length  && 
                 <p className="mt-[100px] text-center text-2xl font-bold m-auto">
-                    No Matching Data  😭<br />There is no current data showing a continuous 0.5% increase in token price.
+                    No Matching Data  😭<br />There is no current data showing a continuous 0.5% increase in token price.<br />please wait. 
                 </p>
                 
             }
