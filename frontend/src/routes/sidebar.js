@@ -46,9 +46,9 @@ const routes = [
     ]
   },
   {
-    path: '/app/backtesting', 
+    path: '/app/history', 
     icon: <BoltIcon className={iconClasses}/>, 
-    name: 'Backtesting', 
+    name: 'History', 
   },
   {
     path: '', 
