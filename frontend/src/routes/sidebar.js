@@ -2,7 +2,6 @@
 import Squares2X2Icon from '@heroicons/react/24/outline/Squares2X2Icon'
 import CurrencyDollarIcon from '@heroicons/react/24/outline/CurrencyDollarIcon'
 import DocumentTextIcon from '@heroicons/react/24/outline/DocumentTextIcon'
-import CodeBracketSquareIcon from '@heroicons/react/24/outline/CodeBracketSquareIcon'
 import ChartBarIcon from '@heroicons/react/24/outline/ChartBarIcon'
 import BoltIcon from '@heroicons/react/24/outline/BoltIcon'
 import UsersIcon from '@heroicons/react/24/outline/UsersIcon'
@@ -18,6 +17,11 @@ const routes = [
     path: '/app/dashboard',
     icon: <Squares2X2Icon className={iconClasses}/>, 
     name: 'Dashboard',
+  },
+  {
+    path: '/app/pair-explorer', 
+    icon: <BoltIcon className={iconClasses}/>, 
+    name: 'Pair Explorer', 
   },
   {
     path: '', 
