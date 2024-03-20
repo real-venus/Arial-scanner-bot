@@ -45,19 +45,21 @@ exports.getRealTimeData =async (getData) => {
             delete shortTokens[`${data.symbol}`];
         }
       }
-      //-------------------------------------------if data is not confirm to test condition, push it.-----------------------------------------//
-      const putData = async ( item, tokens, kline1d, kline1h ) => {
-        let realdata = {};
-        realdata.symbol = item.symbol;
-        realdata.openTime = (new Date( Number( item.openTime ) )).toString().slice(4,21);
-        realdata.closeTime = (new Date( Number( item.closeTime ) )).toString().slice(4,21);
-        realdata.openPrice = item.openPrice;
-        realdata.closePrice = item.closePrice;
-        realdata.change = changePercent( item.openPrice, item.closePrice );
-        realdata.volume = Number(kline1d?.data[0][7]);
-        realdata.high = Number(kline1h?.data[0][2]);
-        realdata.low = Number(kline1h?.data[0][3]);
+      
         
+        
+        //-------------------------------------------if data is not confirm to test condition, push it.-----------------------------------------//
+        const putData = async ( item, tokens, kline1d, kline1h ) => {
+          let realdata = {};
+          realdata.symbol = item.symbol;
+          realdata.openTime = (new Date( Number( item.openTime ) )).toString().slice(4,21);
+          realdata.closeTime = (new Date( Number( item.closeTime ) )).toString().slice(4,21);
+          realdata.openPrice = item.openPrice;
+          realdata.closePrice = item.closePrice;
+          realdata.change = changePercent( item.openPrice, item.closePrice );
+          realdata.volume = Number(kline1d?.data[0][7]);
+          realdata.high = Number(kline1h?.data[0][2]);
+          realdata.low = Number(kline1h?.data[0][3]);
         //----------------------------put data to tokens-----------------------------------------//
           tokens[`${realdata.symbol}`] = {
             openTime: realdata.openTime,
@@ -69,6 +71,7 @@ exports.getRealTimeData =async (getData) => {
             volume: realdata.volume,
             change: realdata.change,
           };
+
           //----------------------------put data to history-----------------------------------------//
           if( history.find(item => item.symbol.toString() === realdata.symbol.toString()) ) {
             const index = history.findIndex(item => item.symbol.toString() === realdata.symbol.toString());
@@ -103,11 +106,12 @@ exports.getRealTimeData =async (getData) => {
               change: realdata.change,
               });
           }
+
           //-----------------------------return data to server.js-----------------------------------------//
           getData({
+            history : history,
             longTokens : longTokens,
             shortTokens : shortTokens,
-            history : history,
             status : 'ok',
           });
         

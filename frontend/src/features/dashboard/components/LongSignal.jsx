@@ -63,13 +63,11 @@ function LongSignal(long){
                 </table>
             </div>
             {
-                data.status == "ok" && !Object.keys(data).length  && 
-                <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />There is no current data showing a continuous 1% increase in token price.</p>
+                !Object.keys(data).length  && 
+                <p className="mt-[100px] text-center text-2xl font-bold m-auto">
+                    No Matching Data  😭<br />There is no current data showing a continuous 0.5% increase in token price.<br />please wait. 
+                </p>
                 
-            }
-            {
-                data.status != "ok" && !Object.keys(data).length  &&
-                <p className="mt-[100px] text-center text-2xl font-bold m-auto">Fetching data ...<br /><LoadingOutlined style={{ fontSize: 24 }} spin /></p>
             }
         </TitleCard>
     )

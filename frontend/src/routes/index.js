@@ -10,15 +10,22 @@ const Hot = lazy(() => import('../pages/protected/Hot'))
 // const Bills = lazy(() => import('../pages/protected/Bills'))
 const Long = lazy(() => import('../pages/protected/Long'))
 const Short = lazy(() => import('../pages/protected/Short'))
+const Pair = lazy(() => import('../pages/protected/Pair'))
+const RoadMap = lazy(() => import('../pages/Roadmap'))
+const History = lazy(() => import('../pages/protected/History'))
 
 const routes = [
+  {
+    path: '/welcome', 
+    component: Welcome, 
+  },
   {
     path: '/dashboard', // the url
     component: Dashboard, // view rendered
   },
   {
-    path: '/welcome', // the url
-    component: Welcome, // view rendered
+    path: '/pair-explorer', 
+    component: Pair, 
   },
   {
     path: '/hot',
@@ -31,6 +38,14 @@ const routes = [
   {
     path: '/short',
     component: Short,
+  },
+  {
+    path: '/history',
+    component: History,
+  },
+  {
+    path: '/roadmap',
+    component: RoadMap,
   },
   {
     path: '/404',

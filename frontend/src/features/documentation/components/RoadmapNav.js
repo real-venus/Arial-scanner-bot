@@ -1,15 +1,18 @@
 import { useState } from "react"
 
-function GettingStartedNav({activeIndex}){
+function RoadmapNav({activeIndex}){
 
     const SECTION_NAVS = [
         {name : "Introduction", isActive : activeIndex === 1 ? true : false},
-        {name : "How to Use", isActive : false},
-        {name : "Tailwind CSS", isActive : false},
-        {name : "Daisy UI", isActive : false},
-        {name : "Redux Toolkit", isActive : false},
-        {name : "Hero Icons", isActive : false},
-        {name : "Project Structure", isActive : false},
+        {name : "Signal collection and Prediction", isActive : false},
+        {name : "Data collection Logic", isActive : false},
+        {name : "AI-Powered Price Prediction", isActive : false},
+        {name : "Signal Prioritization", isActive : false},
+        {name : "Access and Features", isActive : false},
+        {name : "Getting Started", isActive : false},
+        {name : "Benefits of Joining", isActive : false},
+        {name : "Continuous Improvement", isActive : false},
+        {name : "Ready to Trade Smarter?", isActive : false},
     ]
     const [navs, setNavs] = useState(SECTION_NAVS)
 
@@ -22,8 +25,8 @@ function GettingStartedNav({activeIndex}){
     }
 
     return(
-        <ul className="menu w-56 mt-10 text-sm">
-            <li className="menu-title"><span className="">Getting Started</span></li>
+        <ul className="menu w-76 mt-10 text-sm">
+            <li className="menu-title"><span className="">Docs</span></li>
             
             {
                 navs.map((n, k) => {
@@ -36,4 +39,4 @@ function GettingStartedNav({activeIndex}){
     )
 }
 
-export default GettingStartedNav
+export default RoadmapNav

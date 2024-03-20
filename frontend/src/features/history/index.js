@@ -9,7 +9,7 @@ import io from 'socket.io-client';
 var socket = io.connect("https://commune-predict-backend-1.onrender.com/");
 // var socket = io.connect("https://168.119.36.145:4000");
 
-function Long() {
+function History() {
 
     const [data, setData] = useState([]);
     var hasBtc = binanceCryptoIcons.has('');
@@ -20,8 +20,8 @@ function Long() {
     var cnt = 0;
     const startWebsocket = () => {
         socket.on('token1min', (data) => {
-            if (data.longTokens) {
-                setData(data.longTokens);
+            if (data.history) {
+                setData(data.history);
             } else {
                 setData([]);
             }
@@ -36,48 +36,51 @@ function Long() {
         };
     }
     startWebsocket();
+    console.log(data);
 
     return (
         <>
             <div className="mt-[10px] grid grid-cols-1 md:grid-cols-1 min-h-[90vh] overflow-hidden ">
-                <TitleCard title={"Long Signal"}>
+                <TitleCard title={"history"}>
                     <div className="overflow-x-auto">
                         <table className="table w-full">
                             <thead>
                                 <tr>
                                     <th className="normal-case text-slate-300">No</th>
                                     <th className="normal-case text-slate-300">Pairs</th>
-                                    <th className="normal-case text-slate-300">Price</th>
+                                    <th className="normal-case text-slate-300">Open Time</th>
+                                    <th className="normal-case text-slate-300">Open Price</th>
+                                    <th className="normal-case text-slate-300">Close Time</th>
+                                    <th className="normal-case text-slate-300">Close Price</th>
                                     <th className="normal-case text-slate-300">Change</th>
-                                    <th className="normal-case text-slate-300">1h high</th>
-                                    <th className="normal-case text-slate-300">1h low</th>
-                                    <th className="normal-case text-slate-300">Open</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    Object.keys(data).length ? Object.keys(data).map((keyName) => {
+                                    data.length ? data.map((item, index) => {
                                         cnt++;
-                                        const cryptoItem = data[keyName];
-                                        var unKnown = Object.keys(data)[0].slice(0, -4);
+                                        var unKnown = item.symbol.slice(0, -4).toLowerCase();
                                         hasBtc = binanceCryptoIcons.has(unKnown);
                                         btcIcon = binanceCryptoIcons.get(unKnown);
                                         return (
-                                            <tr key={keyName}>
+                                            <tr key={index}>
                                                 <th className="text-slate-300">#{cnt}</th>
                                                 <th className=" text-[16px] flex flex-col md:flex-row items-center  text-slate-300 uppercase">
                                                     {
-                                                        hasBtc ?
-                                                            <span dangerouslySetInnerHTML={{ __html: btcIcon.replace('"32"', '"24"') }} />
-                                                            :
-                                                            <span dangerouslySetInnerHTML={{ __html: default_btcIcon.replace('"32"', '"24"') }} />
-                                                    }{Object.keys(data)[cnt - 1].slice(0, -4)}/{Object.keys(data)[cnt - 1].slice(-4,)}
+                                                        hasBtc ? <span dangerouslySetInnerHTML={{ __html: btcIcon.replace('"32"', '"24"') }} /> 
+                                                        :
+                                                        <span dangerouslySetInnerHTML={{ __html: default_btcIcon.replace('"32"', '"24"') }} />
+                                                    }{item.symbol}
                                                 </th>
-                                                <td className="text-slate-300">{Number(cryptoItem.closePrice).toFixed(4)}</td>
-                                                <td className="text-slate-300">{Number(cryptoItem.change).toFixed(4)} %</td>
-                                                <td className="text-slate-300">{Number(cryptoItem.high).toFixed(4)}</td>
-                                                <td className="text-slate-300">{Number(cryptoItem.low).toFixed(4)}</td>
-                                                <td className="font-semibold text-white badge badge-success mb-[13px]">long</td>
+                                                <td className="text-slate-300">{item.openTime}</td>
+                                                <td className="text-slate-300">{item.openPrice}</td>
+                                                <td className="text-slate-300">{item.closeTime}</td>
+                                                <td className="text-slate-300">{item.closePrice}</td>
+                                                {Number(item.change).toFixed(4) > 0 ?
+                                                    <td className="text-slate-300">{Number(item.change).toFixed(4)}</td>
+                                                    :
+                                                    <td className="text-red-300">{Number(item.change).toFixed(4)}</td>
+                                                }
                                             </tr>
                                         )
                                     })
@@ -98,4 +101,4 @@ function Long() {
     )
 }
 
-export default Long
+export default History
