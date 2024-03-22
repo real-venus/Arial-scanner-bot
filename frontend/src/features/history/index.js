@@ -53,6 +53,7 @@ function History() {
                                     <th className="normal-case text-slate-300">Close Time</th>
                                     <th className="normal-case text-slate-300">Close Price</th>
                                     <th className="normal-case text-slate-300">Change</th>
+                                    <th className="normal-case text-slate-300">Volume</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,11 +77,12 @@ function History() {
                                                 <td className="text-slate-300">{item.openPrice}</td>
                                                 <td className="text-slate-300">{item.closeTime}</td>
                                                 <td className="text-slate-300">{item.closePrice}</td>
-                                                {Number(item.change).toFixed(4) > 0 ?
-                                                    <td className="text-slate-300">{Number(item.change).toFixed(4)}</td>
-                                                    :
-                                                    <td className="text-red-300">{Number(item.change).toFixed(4)}</td>
-                                                }
+                                                    {Number(item.change).toFixed(4) > 0 ?
+                                                        <td className="text-emerald-500">{Number(item.change).toFixed(4)}</td>
+                                                        :
+                                                        <td className="text-red-300">{Number(item.change).toFixed(4)}</td>
+                                                    }
+                                                <td className="text-slate-300">{item.volume}</td>
                                             </tr>
                                         )
                                     })
@@ -93,7 +95,7 @@ function History() {
                         </table>
                     </div>
                     {
-                        !Object.keys(data).length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />There are currently no Short Signals showing a 0.5% difference in token price over 3 minutes.<br />please wait.</p>
+                        !Object.keys(data).length && <p className="mt-[100px] text-center text-2xl font-bold m-auto">No Matching Data  😭<br />please wait.</p>
                     }
                 </TitleCard>
             </div>
