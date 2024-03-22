@@ -13,6 +13,7 @@ const Short = lazy(() => import('../pages/protected/Short'))
 const Pair = lazy(() => import('../pages/protected/Pair'))
 const RoadMap = lazy(() => import('../pages/Roadmap'))
 const History = lazy(() => import('../pages/protected/History'))
+const Backtesting = lazy(() => import('../pages/protected/Backtesting'))
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
   {
     path: '/history',
     component: History,
+  },
+  {
+    path: '/backtesting',
+    component: Backtesting,
   },
   {
     path: '/roadmap',
