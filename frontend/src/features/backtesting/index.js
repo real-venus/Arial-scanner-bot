@@ -4,8 +4,30 @@ import TitleCard from "../../components/Cards/TitleCard"
 import { showNotification } from '../common/headerSlice'
 import InputText from '../../components/Input/InputText'
 import Datepicker from "react-tailwindcss-datepicker"; 
-import ToogleInput from '../../components/Input/ToogleInput'
 import { useState } from 'react'
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend
+  );
 
 function Backtesting() {
     const container = useRef();
@@ -74,6 +96,31 @@ function Backtesting() {
         setDateValue(newValue); 
     } 
 
+    const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+        },
+      };
+    
+      
+      const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    
+      const data = {
+      labels,
+      datasets: [
+        {
+          fill: true,
+          label: 'Price',
+          data: labels.map(() => { return Math.random() * 100 + 500 }),
+          borderColor: 'rgb(53, 162, 235)',
+          backgroundColor: 'rgba(7, 141, 237, 0.5)',
+        },
+      ],
+    };
+
     return (
         <div className="flex flex-col gap-5">
             <TitleCard title={"Trading View"}>
@@ -83,7 +130,7 @@ function Backtesting() {
             </TitleCard>
             <TitleCard title="Backtesting Form" topMargin="mt-2">
                 <div className="grid grid-cols md:grid-cols-2 gap-2 ">
-                    <div className="grid grid-cols gap-2 w-[288px]">
+                    <div className="grid grid-cols gap-2 w-[288px] ml-[100px]">
                         <InputText labelTitle="Coin name" defaultValue="BTC" updateFormValue={updateFormValue}/>
                         <p className="">Select Period</p>
                         <Datepicker 
@@ -99,6 +146,9 @@ function Backtesting() {
                         /> 
                         <InputText labelTitle="Start Amount" defaultValue="100" updateFormValue={updateFormValue}/>
                         <InputText labelTitle="Profit" defaultValue="" updateFormValue={updateFormValue}/>
+                    </div>
+                    <div className="mt-[50px] mr-[100px]">
+                        <Line data={data} options={options}/>
                     </div>
                 </div>
                 
