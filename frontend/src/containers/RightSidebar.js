@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import NotificationBodyRightDrawer from '../features/common/components/NotificationBodyRightDrawer'
 import { closeRightDrawer } from '../features/common/rightDrawerSlice'
 import { RIGHT_DRAWER_TYPES } from '../utils/globalConstantUtil'
-import CalendarEventsBodyRightDrawer from '../features/calendar/CalendarEventsBodyRightDrawer'
 
 
 function RightSidebar(){
@@ -40,7 +39,6 @@ function RightSidebar(){
                             {
                                 {
                                         [RIGHT_DRAWER_TYPES.NOTIFICATION] : <NotificationBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
-                                        [RIGHT_DRAWER_TYPES.CALENDAR_EVENTS] : <CalendarEventsBodyRightDrawer {...extraObject} closeRightDrawer={close}/>,
                                         [RIGHT_DRAWER_TYPES.DEFAULT] : <div></div>
                                 }[bodyType]
                             }
