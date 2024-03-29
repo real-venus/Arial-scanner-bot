@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { useTheme } from "next-themes"
+
 import {
   CartesianGrid,
   Legend,
@@ -11,40 +11,41 @@ import {
   YAxis,
 } from "recharts"
 
-import { ConsumptionDatum } from "../common/types"
+// import { useConsumption } from "../../hooks/use-consumption"
+// import { ConsumptionDatum } from "../common/types"
 
-export type RawData = {
-  ref_time: {
-    normal: number
-    operational: number
-    mandatory: number
-  }
-  proof_size: {
-    normal: number
-    operational: number
-    mandatory: number
-  }
-  count: number
-}
+// export type RawData = {
+//   ref_time: {
+//     normal: number
+//     operational: number
+//     mandatory: number
+//   }
+//   proof_size: {
+//     normal: number
+//     operational: number
+//     mandatory: number
+//   }
+//   count: number
+// }
 
-type Props = {
-  data: ConsumptionDatum[] // The updated prop type to match the new data structure.
-  grouping: string
-  refTimeDisplayed: boolean
-  proofSizeDisplayed: boolean
-}
+// type Props = {
+//   data: ConsumptionDatum[] // The updated prop type to match the new data structure.
+//   grouping: string
+//   refTimeDisplayed: boolean
+//   proofSizeDisplayed: boolean
+// }
 
-type ChartDatum = {
-  date: string // Used for labeling the x-axis.
-  avgRefTimeNormal: number
-  avgRefTimeOperational: number
-  avgRefTimeMandatory: number
-  avgRefTimeTotal: number
-  avgProofSizeNormal: number
-  avgProofSizeOperational: number
-  avgProofSizeMandatory: number
-  avgProofSizeTotal: number
-}
+// let ChartDatum = {
+//   date: string // Used for labeling the x-axis.
+//   avgRefTimeNormal: number
+//   avgRefTimeOperational: number
+//   avgRefTimeMandatory: number
+//   avgRefTimeTotal: number
+//   avgProofSizeNormal: number
+//   avgProofSizeOperational: number
+//   avgProofSizeMandatory: number
+//   avgProofSizeTotal: number
+// }
 
 const colors = {
   ref_time: {
@@ -61,15 +62,14 @@ const colors = {
   },
 }
 
-const ConsumptionChart: React.FC<Props> = ({
+const ConsumptionChart = ({
   data,
   refTimeDisplayed,
   proofSizeDisplayed,
 }) => {
-  const { theme } = useTheme()
 
-  const formatData = (data: ConsumptionDatum[]): ChartDatum[] => {
-    return data.map((datum: ConsumptionDatum) => ({
+  const formatData = (data) => {
+    return data.map((datum) => ({
       date: datum.group,
       avgRefTimeNormal: datum.ref_time.normal / datum.count,
       avgRefTimeOperational: datum.ref_time.operational / datum.count,
@@ -92,13 +92,13 @@ const ConsumptionChart: React.FC<Props> = ({
 
   const formattedData = useMemo(() => formatData(data), [data])
 
-  const formatYAxisTick = (value: any) => `${(value * 100).toFixed(2)}%`
-  const formatTooltip = (value: any, name: any) => {
+  const formatYAxisTick = (value) => `${(value * 100).toFixed(2)}%`
+  const formatTooltip = (value, name) => {
     return `${(value * 100).toFixed(2)}%`
   }
 
   return (
-    <div className="w-full rounded-lg bg-white p-4 shadow-md dark:bg-gray-900 dark:text-white ">
+    <div className="w-full rounded-lg p-4 shadow-md dark:bg-gray-900 dark:text-white text-white">
       <ResponsiveContainer width="100%" height={500}>
         <LineChart
           data={formattedData}

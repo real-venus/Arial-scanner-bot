@@ -18,7 +18,6 @@ import {
   Filler,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +32,42 @@ ChartJS.register(
 
 function Backtesting() {
   const container = useRef();
+  const dispatch = useDispatch()
+
   const symbol = "COINEX:COMAIUSDT";
+  const historicConsumption = [{ "group": "2024-03-29T05:00", "ref_time": { "normal": 0.044, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.038999997, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:01", "ref_time": { "normal": 0.042, "operational": 0.0, "mandatory": 0.044 }, "proof_size": { "normal": 0.037, "operational": 0.0, "mandatory": 0.008 }, "count": 4 }, { "group": "2024-03-29T05:02", "ref_time": { "normal": 0.031999998, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.026, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:03", "ref_time": { "normal": 0.051999997, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.046, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:04", "ref_time": { "normal": 0.041, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.038, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:05", "ref_time": { "normal": 0.042999998, "operational": 0.0, "mandatory": 0.022 }, "proof_size": { "normal": 0.041, "operational": 0.0, "mandatory": 0.004 }, "count": 2 }]
+  const Symboloptions = [
+    { value: 'btc', label: 'BTC' },
+    { value: 'usdt', label: 'USDT' },
+    { value: 'bnb', label: 'BNB' }
+  ]
+  const Intervaloptions = [
+    { value: '1m', label: '1m' },
+    { value: '1h', label: '1h' },
+  ]
+  
+  const [dateValue, setDateValue] = useState({
+    startDate: new Date(),
+    endDate: new Date()
+  });
+
+  const [initialBalance, setInitialBalance] = useState("");
+  const [usedBalance, setUsedBalance] = useState("");
+  const [profitloss, setProfitloss] = useState("");
+  const [coinsymbol, setCoinsymbol] = useState("");
+  const [interval, setInterval] = useState("");
+
+  // Call API to update profile settings changes
+  const updateProfile = () => {
+    dispatch(showNotification({ message: "Back Testing", status: 1 }))
+
+    console.log("data-------", [initialBalance, usedBalance, profitloss, coinsymbol, interval, dateValue]);
+  }
+
+  const handleDatePickerValueChange = (newValue) => {
+    console.log("newValue:", newValue);
+    setDateValue(newValue);
+  }
 
   useEffect(
     () => {
@@ -77,63 +111,6 @@ function Backtesting() {
     [symbol]
   );
 
-  const dispatch = useDispatch()
-
-  // Call API to update profile settings changes
-  const updateProfile = () => {
-    dispatch(showNotification({ message: "Back Testing", status: 1 }))
-  }
-
-  const updateFormValue = ({ updateType, value }) => {
-    console.log(updateType)
-  }
-
-  const [dateValue, setDateValue] = useState({
-    startDate: new Date(),
-    endDate: new Date()
-  });
-
-  const handleDatePickerValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setDateValue(newValue);
-  }
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-    },
-  };
-
-
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        fill: true,
-        label: 'Price',
-        data: labels.map(() => { return Math.random() * 100 + 500 }),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(7, 141, 237, 0.5)',
-      },
-    ],
-  };
-
-  const Symboloptions = [   
-    { value: 'btc', label: 'BTC' },
-    { value: 'usdt', label: 'USDT' },
-    { value: 'bnb', label: 'BNB' }
-  ]
-
-  const Intervaloptions = [
-    { value: '1m', label: '1m' },
-    { value: '1h', label: '1h' },
-  ]
-
   return (
     <div className="flex flex-col gap-5">
       <TitleCard title={"Trading View"}>
@@ -146,13 +123,13 @@ function Backtesting() {
           <div className="grid grid-cols gap-2 w-[288px] ml-[100px]"> */}
 
         <div className="flex flex-row gap-10 mt-5">
-          <InputText labelTitle="Initial Balance" defaultValue="" updateFormValue={updateFormValue} disable={true} />
-          <InputText labelTitle="Used Balance" defaultValue="" updateFormValue={updateFormValue} disable={true} />
-          <InputText labelTitle="Profit-Loss" defaultValue="" updateFormValue={updateFormValue} disable={true} />
+          <InputText labelTitle="Initial Balance" defaultValue="" updateFormValue={(value) => {setInitialBalance(value)}} disable={true} />
+          <InputText labelTitle="Used Balance" defaultValue="" updateFormValue={(value) => {setUsedBalance(value)}} disable={true} />
+          <InputText labelTitle="Profit-Loss" defaultValue="" updateFormValue={(value) => {setProfitloss(value)}} disable={true} />
         </div>
         <div className="flex flex-row gap-10 mt-10">
-          <SelectInput labelTitle="Symbol" updateFormValue={updateFormValue} options={Symboloptions}/>
-          <SelectInput labelTitle="Interval" updateFormValue={updateFormValue} options={Intervaloptions}/>
+          <SelectInput labelTitle="Symbol" updateFormValue={(value) => {setCoinsymbol(value)}} options={Symboloptions} />
+          <SelectInput labelTitle="Interval" updateFormValue={(value) => {setInterval(value)}} options={Intervaloptions} />
           <div>
             <label className="label">
               <span className={"label-text text-base-content "}>Date</span>
@@ -175,15 +152,15 @@ function Backtesting() {
           <Line data={data} options={options} />
         </div> */}
         <div>
-        
+
           <ConsumptionChart
             data={historicConsumption}
-            grouping={range}
-            refTimeDisplayed={refTimeDisplayed}
-            proofSizeDisplayed={proofSizeDisplayed}
+            grouping={"hour"}
+            refTimeDisplayed={true}
+            proofSizeDisplayed={true}
           />
- 
-      </div>
+
+        </div>
 
         <div className="divider" ></div>
 

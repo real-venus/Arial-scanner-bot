@@ -3,7 +3,7 @@ import Subtitle from "../Typography/Subtitle"
   
   function TitleCard({title, children, topMargin, TopSideButtons}){
       return(
-          <div className={"card w-full p-6 bg-gray-900 shadow-xl min-h-[400px] !important" + (topMargin || "mt-6")}>
+          <div className={"pt-11 card w-full p-6 bg-gray-900 shadow-xl min-h-[400px] !important" + (topMargin || "mt-6")}>
 
             {/* Title for Card */}
               <Subtitle styleClass={TopSideButtons ? "inline-block" : ""}>
@@ -20,10 +20,8 @@ import Subtitle from "../Typography/Subtitle"
               <div className='h-full w-full pb-6 bg-gray-900'>
                   {children}
               </div>
-          </div>
-          
+          </div>          
       )
-  }
-  
+  }  
   
   export default TitleCard

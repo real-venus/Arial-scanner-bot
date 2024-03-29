@@ -12,7 +12,7 @@ function ConfirmationModalBody({ extraObject, closeModal}){
 
     const proceedWithYes = async() => {
         if(type === CONFIRMATION_MODAL_CLOSE_TYPES.LEAD_DELETE){
-            dispatch(deleteLead({index}))
+            // dispatch(deleteLead({index}))
             dispatch(showNotification({message : "Lead Deleted!", status : 1}))
         }
         closeModal()

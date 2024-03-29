@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Select from "react-tailwindcss-select";
+// import Select from "react-tailwindcss-select";
 
 
 function SelectInput({ labelTitle, labelStyle, options, type, containerStyle, defaultValue, placeholder, updateFormValue, updateType }) {
