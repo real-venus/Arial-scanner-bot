@@ -120,35 +120,35 @@ const ConsumptionChart = ({
                 type="monotone"
                 dataKey="avgRefTimeNormal"
                 stroke={colors.ref_time.normal}
-                name="Ref Time Normal"
+                name="MACD"
                 activeDot={{ r: 6 }}
               />
-              <Line
+              {/* <Line
                 type="monotone"
                 dataKey="avgRefTimeOperational"
                 stroke={colors.ref_time.operational}
                 name="Ref Time Operational"
                 activeDot={{ r: 6 }}
-              />
+              /> */}
               <Line
                 type="monotone"
                 dataKey="avgRefTimeMandatory"
                 stroke={colors.ref_time.mandatory}
-                name="Ref Time Mandatory"
+                name="SIGNAL"
                 activeDot={{ r: 6 }}
               />
-              <Line
+              {/* <Line
                 type="monotone"
                 dataKey="avgRefTimeTotal"
                 stroke={colors.ref_time.total}
                 name="Ref Time Total"
                 activeDot={{ r: 6 }}
-              />
+              /> */}
             </>
           )}
           {proofSizeDisplayed && (
             <>
-              <Line
+              {/* <Line
                 type="monotone"
                 dataKey="avgProofSizeNormal"
                 stroke={colors.proof_size.normal}
@@ -179,7 +179,7 @@ const ConsumptionChart = ({
                 name="Proof Size Total"
                 strokeDasharray="8 2"
                 activeDot={{ r: 6 }}
-              />
+              /> */}
             </>
           )}
         </LineChart>

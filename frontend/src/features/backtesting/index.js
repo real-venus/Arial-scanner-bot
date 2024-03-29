@@ -35,17 +35,18 @@ function Backtesting() {
   const dispatch = useDispatch()
 
   const symbol = "COINEX:COMAIUSDT";
-  const historicConsumption = [{ "group": "2024-03-29T05:00", "ref_time": { "normal": 0.044, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.038999997, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:01", "ref_time": { "normal": 0.042, "operational": 0.0, "mandatory": 0.044 }, "proof_size": { "normal": 0.037, "operational": 0.0, "mandatory": 0.008 }, "count": 4 }, { "group": "2024-03-29T05:02", "ref_time": { "normal": 0.031999998, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.026, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:03", "ref_time": { "normal": 0.051999997, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.046, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:04", "ref_time": { "normal": 0.041, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.038, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:05", "ref_time": { "normal": 0.042999998, "operational": 0.0, "mandatory": 0.022 }, "proof_size": { "normal": 0.041, "operational": 0.0, "mandatory": 0.004 }, "count": 2 }]
+  const historicConsumption = [{ 
+    "group": "2024-03-29T05:00",
+     "ref_time": { "normal": 0.044, "operational": 0.0, "mandatory": 0.055 }, 
+     "proof_size": { "normal": 0.038999997, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:01", "ref_time": { "normal": 0.042, "operational": 0.0, "mandatory": 0.044 }, "proof_size": { "normal": 0.037, "operational": 0.0, "mandatory": 0.008 }, "count": 4 },  { "group": "2024-03-29T05:03", "ref_time": { "normal": 0.051999997, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.046, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:04", "ref_time": { "normal": 0.041, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.038, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:05", "ref_time": { "normal": 0.042999998, "operational": 0.0, "mandatory": 0.022 }, "proof_size": { "normal": 0.041, "operational": 0.0, "mandatory": 0.004 }, "count": 2 }]
+  console.log('11111111111', historicConsumption);
   const Symboloptions = [
-    { value: 'btc', label: 'BTC' },
-    { value: 'usdt', label: 'USDT' },
-    { value: 'bnb', label: 'BNB' }
+    { value: 'BTCUSDT', label: 'BTCUSDT' }
   ]
   const Intervaloptions = [
-    { value: '1m', label: '1m' },
-    { value: '1h', label: '1h' },
+    { value: '1m', label: '1m' }
   ]
-  
+
   const [dateValue, setDateValue] = useState({
     startDate: new Date(),
     endDate: new Date()
@@ -69,14 +70,13 @@ function Backtesting() {
     setDateValue(newValue);
   }
 
-  useEffect(
-    () => {
-      const script = document.createElement("script");
-      if (localStorage.getItem("state") !== "1") {
-        script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-        script.type = "text/javascript";
-        script.async = true;
-        script.innerHTML = `
+  useEffect(() => {
+    const script = document.createElement("script");
+    if (localStorage.getItem("state") !== "1") {
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = `
               {
                 "autosize": true,
                 "symbol": "${symbol}",
@@ -97,17 +97,17 @@ function Backtesting() {
                 "popup_height": "650",
                 "support_host": "https://www.tradingview.com"
               }`;
-        if (container.current.children.length === 1) {
-          container.current.appendChild(script);
-        } else {
-        }
-        localStorage.setItem("state", "1");
+      if (container.current.children.length === 1) {
+        container.current.appendChild(script);
+      } else {
       }
-      else {
-        localStorage.setItem("state", "0");
-      }
-      // console.log('---------------', symbol)
-    },
+      localStorage.setItem("state", "1");
+    }
+    else {
+      localStorage.setItem("state", "0");
+    }
+    // console.log('---------------', symbol)
+  },
     [symbol]
   );
 
@@ -123,13 +123,13 @@ function Backtesting() {
           <div className="grid grid-cols gap-2 w-[288px] ml-[100px]"> */}
 
         <div className="flex flex-row gap-10 mt-5">
-          <InputText labelTitle="Initial Balance" defaultValue="" updateFormValue={(value) => {setInitialBalance(value)}} disable={true} />
-          <InputText labelTitle="Used Balance" defaultValue="" updateFormValue={(value) => {setUsedBalance(value)}} disable={true} />
-          <InputText labelTitle="Profit-Loss" defaultValue="" updateFormValue={(value) => {setProfitloss(value)}} disable={true} />
+          <InputText labelTitle="Initial Balance" defaultValue="" placeholder={100} updateFormValue={(value) => { setInitialBalance(value) }} disable={true} />
+          <InputText labelTitle="USD Balance" defaultValue="" placeholder='0' updateFormValue={(value) => { setUsedBalance(value) }} disable={true} />
+          <InputText labelTitle="Profit-Loss" defaultValue="" updateFormValue={(value) => { setProfitloss(value) }} disable={true} />
         </div>
         <div className="flex flex-row gap-10 mt-10">
-          <SelectInput labelTitle="Symbol" updateFormValue={(value) => {setCoinsymbol(value)}} options={Symboloptions} />
-          <SelectInput labelTitle="Interval" updateFormValue={(value) => {setInterval(value)}} options={Intervaloptions} />
+          <SelectInput labelTitle="Symbol" updateFormValue={(value) => { setCoinsymbol(value) }} options={Symboloptions} />
+          <SelectInput labelTitle="Interval" updateFormValue={(value) => { setInterval(value) }} options={Intervaloptions} />
           <div>
             <label className="label">
               <span className={"label-text text-base-content "}>Date</span>
