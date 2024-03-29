@@ -11,41 +11,6 @@ import {
   YAxis,
 } from "recharts"
 
-// import { useConsumption } from "../../hooks/use-consumption"
-// import { ConsumptionDatum } from "../common/types"
-
-// export type RawData = {
-//   ref_time: {
-//     normal: number
-//     operational: number
-//     mandatory: number
-//   }
-//   proof_size: {
-//     normal: number
-//     operational: number
-//     mandatory: number
-//   }
-//   count: number
-// }
-
-// type Props = {
-//   data: ConsumptionDatum[] // The updated prop type to match the new data structure.
-//   grouping: string
-//   refTimeDisplayed: boolean
-//   proofSizeDisplayed: boolean
-// }
-
-// let ChartDatum = {
-//   date: string // Used for labeling the x-axis.
-//   avgRefTimeNormal: number
-//   avgRefTimeOperational: number
-//   avgRefTimeMandatory: number
-//   avgRefTimeTotal: number
-//   avgProofSizeNormal: number
-//   avgProofSizeOperational: number
-//   avgProofSizeMandatory: number
-//   avgProofSizeTotal: number
-// }
 
 const colors = {
   ref_time: {
@@ -65,36 +30,21 @@ const colors = {
 const ConsumptionChart = ({
   data,
   refTimeDisplayed,
-  proofSizeDisplayed,
 }) => {
 
   const formatData = (data) => {
     return data.map((datum) => ({
       date: datum.group,
-      avgRefTimeNormal: datum.ref_time.normal / datum.count,
-      avgRefTimeOperational: datum.ref_time.operational / datum.count,
-      avgRefTimeMandatory: datum.ref_time.mandatory / datum.count,
-      avgRefTimeTotal:
-        (datum.ref_time.normal +
-          datum.ref_time.operational +
-          datum.ref_time.mandatory) /
-        datum.count,
-      avgProofSizeNormal: datum.proof_size.normal / datum.count,
-      avgProofSizeOperational: datum.proof_size.operational / datum.count,
-      avgProofSizeMandatory: datum.proof_size.mandatory / datum.count,
-      avgProofSizeTotal:
-        (datum.proof_size.normal +
-          datum.proof_size.operational +
-          datum.proof_size.mandatory) /
-        datum.count,
+      avgRefTimeNormal: datum.ref_time.normal ,
+      avgRefTimeMandatory: datum.ref_time.mandatory 
     }))
   }
 
   const formattedData = useMemo(() => formatData(data), [data])
 
-  const formatYAxisTick = (value) => `${(value * 100).toFixed(2)}%`
+  const formatYAxisTick = (value) => `${(value).toFixed(4)}`
   const formatTooltip = (value, name) => {
-    return `${(value * 100).toFixed(2)}%`
+    return `${(value).toFixed(4)}`
   }
 
   return (
@@ -123,13 +73,6 @@ const ConsumptionChart = ({
                 name="MACD"
                 activeDot={{ r: 6 }}
               />
-              {/* <Line
-                type="monotone"
-                dataKey="avgRefTimeOperational"
-                stroke={colors.ref_time.operational}
-                name="Ref Time Operational"
-                activeDot={{ r: 6 }}
-              /> */}
               <Line
                 type="monotone"
                 dataKey="avgRefTimeMandatory"
@@ -137,54 +80,11 @@ const ConsumptionChart = ({
                 name="SIGNAL"
                 activeDot={{ r: 6 }}
               />
-              {/* <Line
-                type="monotone"
-                dataKey="avgRefTimeTotal"
-                stroke={colors.ref_time.total}
-                name="Ref Time Total"
-                activeDot={{ r: 6 }}
-              /> */}
             </>
           )}
-          {proofSizeDisplayed && (
-            <>
-              {/* <Line
-                type="monotone"
-                dataKey="avgProofSizeNormal"
-                stroke={colors.proof_size.normal}
-                name="Proof Size Normal"
-                strokeDasharray="8 2"
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="avgProofSizeOperational"
-                stroke={colors.proof_size.operational}
-                name="Proof Size Operational"
-                strokeDasharray="8 2"
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="avgProofSizeMandatory"
-                stroke={colors.proof_size.mandatory}
-                name="Proof Size Mandatory"
-                strokeDasharray="8 2"
-                activeDot={{ r: 6 }}
-              />
-              <Line
-                type="monotone"
-                dataKey="avgProofSizeTotal"
-                stroke={colors.proof_size.total}
-                name="Proof Size Total"
-                strokeDasharray="8 2"
-                activeDot={{ r: 6 }}
-              /> */}
-            </>
-          )}
+          
         </LineChart>
       </ResponsiveContainer>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
     </div>
   )
 }

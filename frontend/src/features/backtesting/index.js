@@ -33,13 +33,11 @@ ChartJS.register(
 function Backtesting() {
   const container = useRef();
   const dispatch = useDispatch()
-
+  const [dateValue, setDateValue] = useState({
+    startDate: new Date(),
+    endDate: new Date()
+  });
   const symbol = "COINEX:COMAIUSDT";
-  const historicConsumption = [{ 
-    "group": "2024-03-29T05:00",
-     "ref_time": { "normal": 0.044, "operational": 0.0, "mandatory": 0.055 }, 
-     "proof_size": { "normal": 0.038999997, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:01", "ref_time": { "normal": 0.042, "operational": 0.0, "mandatory": 0.044 }, "proof_size": { "normal": 0.037, "operational": 0.0, "mandatory": 0.008 }, "count": 4 },  { "group": "2024-03-29T05:03", "ref_time": { "normal": 0.051999997, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.046, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:04", "ref_time": { "normal": 0.041, "operational": 0.0, "mandatory": 0.055 }, "proof_size": { "normal": 0.038, "operational": 0.0, "mandatory": 0.010000001 }, "count": 5 }, { "group": "2024-03-29T05:05", "ref_time": { "normal": 0.042999998, "operational": 0.0, "mandatory": 0.022 }, "proof_size": { "normal": 0.041, "operational": 0.0, "mandatory": 0.004 }, "count": 2 }]
-  console.log('11111111111', historicConsumption);
   const Symboloptions = [
     { value: 'BTCUSDT', label: 'BTCUSDT' }
   ]
@@ -47,28 +45,87 @@ function Backtesting() {
     { value: '1m', label: '1m' }
   ]
 
-  const [dateValue, setDateValue] = useState({
-    startDate: new Date(),
-    endDate: new Date()
-  });
-
+  const [startDateTime, setStartDateTime] = useState('');
+  const [endDateTime, setEndDateTime] = useState('');
   const [initialBalance, setInitialBalance] = useState("");
-  const [usedBalance, setUsedBalance] = useState("");
+  const [finalBalance, setFinalBalance] = useState("");
   const [profitloss, setProfitloss] = useState("");
-  const [coinsymbol, setCoinsymbol] = useState("");
+  const [coinsymbol, setCoinsymbol] = useState("BTCUSDT");
   const [interval, setInterval] = useState("");
 
-  // Call API to update profile settings changes
+  const [historicConsumption, setHistoricConsumption] = useState([]);
+
   const updateProfile = () => {
     dispatch(showNotification({ message: "Back Testing", status: 1 }))
 
-    console.log("data-------", [initialBalance, usedBalance, profitloss, coinsymbol, interval, dateValue]);
+    console.log("data-------", [initialBalance, finalBalance, profitloss, coinsymbol, interval, dateValue]);
   }
 
   const handleDatePickerValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setDateValue(newValue);
+    setStartDateTime(new Date(newValue.startDate).getTime());
+    setEndDateTime(new Date(newValue.endDate).getTime());
+    setDateValue(newValue.startDate, newValue.endDate);
   }
+
+  // useEffect(() => {
+    // fetch(`http://127.0.0.1:8000/${coinsymbol}/1m/${startDateTime}/${endDateTime}`)
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+    //   return response.json();
+    // })
+    // .then(data => {
+      // Process the received data
+    //   const macdValues = data.macd;
+    //   const signalValues = data.signal;
+    //   const profitloss1 = data.backTestResult.profit_loss
+    //   const finalBalance1 = data.backTestResult.final_balance
+    //   const transformedData = macdValues.map((value, index) => ({
+    //     "group": data.backTestData[index].openTime,
+    //     "ref_time": {
+    //       "normal": value,
+    //       "mandatory": signalValues[index]
+    //     }
+    //   }));
+    //   setHistoricConsumption(transformedData);
+    //   setProfitloss(profitloss1);
+    //   setFinalBalance(finalBalance1);
+    // })
+    // .catch(error => {
+    //   console.error('There was a problem with the fetch operation:', error);
+    // });
+  // }, [])
+  const fetchData = async () => {
+    try{
+      const response = await fetch(`http://127.0.0.1:8000/${coinsymbol}/1m/${startDateTime}/${endDateTime}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      const macdValues = data.macd;
+      const signalValues = data.signal;
+      const profitloss1 = data.backTestResult.profit_loss
+      const finalBalance1 = data.backTestResult.final_balance
+      const transformedData = macdValues.map((value, index) => ({
+        "group": data.backTestData[index].openTime,
+        "ref_time": {
+          "normal": value,
+          "mandatory": signalValues[index]
+        }
+      }));
+      setHistoricConsumption(transformedData);
+      setProfitloss(profitloss1);
+      setFinalBalance(finalBalance1);
+    } catch(error) {
+      console.error('There was a problem fetching data:', error);
+    }
+  }
+  fetchData();
+  useEffect(() => {
+    // Initial fetch
+    
+  }, []);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -124,8 +181,8 @@ function Backtesting() {
 
         <div className="flex flex-row gap-10 mt-5">
           <InputText labelTitle="Initial Balance" defaultValue="" placeholder={100} updateFormValue={(value) => { setInitialBalance(value) }} disable={true} />
-          <InputText labelTitle="USD Balance" defaultValue="" placeholder='0' updateFormValue={(value) => { setUsedBalance(value) }} disable={true} />
-          <InputText labelTitle="Profit-Loss" defaultValue="" updateFormValue={(value) => { setProfitloss(value) }} disable={true} />
+          <InputText labelTitle="USD Balance" defaultValue="" placeholder={finalBalance} updateFormValue={(value) => { setFinalBalance(value) }} disable={true} />
+          <InputText labelTitle="Profit-Loss" defaultValue="" placeholder={profitloss} updateFormValue={(value) => { setProfitloss(value) }} disable={true} />
         </div>
         <div className="flex flex-row gap-10 mt-10">
           <SelectInput labelTitle="Symbol" updateFormValue={(value) => { setCoinsymbol(value) }} options={Symboloptions} />
@@ -164,7 +221,7 @@ function Backtesting() {
 
         <div className="divider" ></div>
 
-        <div className="mt-16"><button className="btn btn-primary float-right" onClick={() => updateProfile()}>Update</button></div>
+        <div className="mt-16"><button className="btn btn-primary float-right" onClick={() => updateProfile()}>Run</button></div>
       </TitleCard>
     </div>
   )
