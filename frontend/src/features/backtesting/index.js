@@ -17,7 +17,88 @@ import {
   Tooltip,
   Filler,
   Legend,
+
 } from 'chart.js';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  // Tooltip,
+  // Legend,
+  ResponsiveContainer,
+  Customized,
+  Rectangle,
+} from 'recharts';
+const data = [
+  {
+    name: 'Page A',
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Page B',
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: 'Page C',
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: 'Page D',
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: 'Page E',
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: 'Page F',
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: 'Page G',
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
+
+// using Customized gives you access to all relevant chart props
+const CustomizedRectangle = (props) => {
+  const { formattedGraphicalItems } = props;
+  // get first and second series in chart
+  const firstSeries = formattedGraphicalItems[0];
+  const secondSeries = formattedGraphicalItems[1];
+
+  // render custom content using points from the graph
+  return firstSeries?.props?.points.map((firstSeriesPoint, index) => {
+    const secondSeriesPoint = secondSeries?.props?.points[index];
+    const yDifference = firstSeriesPoint.y - secondSeriesPoint.y
+
+    return (
+      <Rectangle
+        key={firstSeriesPoint.payload.name}
+        width={10}
+        height={30}
+        x={secondSeriesPoint.x }
+        y={secondSeriesPoint.y}
+        fill={'red'}/>
+           )
+  })
+};
 
 ChartJS.register(
   CategoryScale,
@@ -97,12 +178,14 @@ function Backtesting() {
     // });
   // }, [])
   const fetchData = async () => {
+   
     try{
       const response = await fetch(`http://127.0.0.1:8000/${coinsymbol}/1m/${startDateTime}/${endDateTime}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      // console.log(data);
       const macdValues = data.macd;
       const signalValues = data.signal;
       const profitloss1 = data.backTestResult.profit_loss
@@ -111,21 +194,25 @@ function Backtesting() {
         "group": data.backTestData[index].openTime,
         "ref_time": {
           "normal": value,
-          "mandatory": signalValues[index]
+          "mandatory": signalValues[index],
+           "position" :data.positions[index]
         }
       }));
       setHistoricConsumption(transformedData);
+      // console.log(transformedData)
       setProfitloss(profitloss1);
       setFinalBalance(finalBalance1);
+      return ;
     } catch(error) {
       console.error('There was a problem fetching data:', error);
     }
   }
-  fetchData();
+  fetchData()
   useEffect(() => {
     // Initial fetch
-    
+    //  fetchData()
   }, []);
+  // useEffect(()=> fetchData())
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -211,7 +298,7 @@ function Backtesting() {
         <div>
 
           <ConsumptionChart
-            data={historicConsumption}
+         data={historicConsumption}   
             grouping={"hour"}
             refTimeDisplayed={true}
             proofSizeDisplayed={true}
@@ -223,8 +310,9 @@ function Backtesting() {
 
         <div className="mt-16"><button className="btn btn-primary float-right" onClick={() => updateProfile()}>Run</button></div>
       </TitleCard>
+      
     </div>
   )
 }
 
-export default memo(Backtesting)
+export default (Backtesting)
