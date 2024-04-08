@@ -4,7 +4,7 @@ exports.getRealTimeData =async (getData) => {
   //----------first request for total ticker that is between 0.01 and 2 and more than 1 million. this is called once-------------------//
   var realTimeData = [];
   const tickerPriceList = await axios.get('https://fapi.binance.com/fapi/v2/ticker/price')
-  const tokensBetween = tickerPriceList.data.filter(item => Number(item.price) >= 0.01 && Number(item.price) <= 2);// tokens between 0.01~2
+  const tokensBetween = tickerPriceList.data.filter(item => Number(item.price) >= 0.01 );// tokens between 0.01~2
 
   await Promise.all(tokensBetween.map(async (item) => {
     const _1dKline = await axios.get(`https://fapi.binance.com/fapi/v1/klines?symbol=${item.symbol}&interval=1d&limit=1`, {//kline per ticker

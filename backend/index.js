@@ -11,14 +11,20 @@ const PORT_SOCKET = 4000;
 
 const socket = require('./server');
 
+app.get('/realTimeTokens', (req, res) => {
+    res.json(app.realTimeTokens)
+});
+
+app.get('/token1min', (req, res) => {
+    res.json(app.token1min)
+});
+
 const server = http.createServer(app);
 
 const io = require('socket.io')(server, {
-    cors: {origin: '*', methods: ['GET', 'POST']},
+    cors: { origin: '*', methods: ['GET', 'POST'] },
 });
 
-socket(io);
+socket(app, io);
 
-server.listen(PORT_SOCKET, () => { console.log('listening on: 4000');});
-
-exports.app;
+server.listen(PORT_SOCKET, () => { console.log('listening on: 4000'); });
