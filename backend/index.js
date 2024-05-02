@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 const PORT_ClIENT = 3001;
-const PORT_SOCKET = 80;
+const PORT_SOCKET = 4000;
 
 const socket = require('./server');
 

@@ -6,8 +6,9 @@ import { binanceCryptoIcons } from 'binance-icons';
 import React from 'react';
 import { LoadingOutlined } from '@ant-design/icons'
 import io from 'socket.io-client';
-var socket = io.connect("https://commune-predict-backend-1.onrender.com/");
+// var socket = io.connect("https://commune-predict-backend-1.onrender.com/");
 // var socket = io.connect("http://168.119.36.145:4000");
+var socket = io.connect(`${window.location.hostname}:4000`);
 
 function Long() {
 
