@@ -17,7 +17,7 @@ function Dashboard(){
     const [connecting, setConnecting] = useState(false);
     const startWebsocket = () => {
       socket.on('backTestData', (data) =>{
-        console.log('backTestData', data.backTestData);
+        // console.log('backTestData', data.backTestData);
       })
       socket.on('realTimeData',(data) =>{
         if(data.status == "ok"){

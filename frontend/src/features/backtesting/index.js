@@ -298,7 +298,7 @@ function Backtesting() {
         <div>
 
           <ConsumptionChart
-         data={historicConsumption}   
+            data={historicConsumption}   
             grouping={"hour"}
             refTimeDisplayed={true}
             proofSizeDisplayed={true}

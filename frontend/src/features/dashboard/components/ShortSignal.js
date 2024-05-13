@@ -13,7 +13,7 @@ function ShortSignal(short){
     return(
         // <TitleCard title={"Short Signal"}>
         <div className="bg-gray-900 rounded-xl pb-[10px]">
-            <header className="px-5  flex flex-row justify-between items-center dark:border-slate-900">
+            <header className="px-5 flex flex-row justify-between items-center dark:border-slate-900">
               <h2 className="font-semibold text-[32px] text-slate-300">Short Signal</h2>
               <a href=""><p className="text-blue-800 font-bold hover:text-blue-500">All</p></a>
             </header>
