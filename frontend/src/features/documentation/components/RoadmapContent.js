@@ -12,12 +12,12 @@ function RoadmapContent() {
   return (
     <>
       <article className="prose">
-        <h1 className="">Comscanner Docs</h1>
+        <h1 className="">IronBlock Trading Docs</h1>
 
         {/* Introduction */}
         <h2 className="" id="getstarted1">Introduction</h2>
         <p >
-          <span className='font-bold'>Welcome to Comscanner </span>
+          <span className='font-bold'>Welcome to IronBlock Trading </span>
           <br />
           where we bring you real-time insights and predictive analytics to empower 
           your cryptocurrency trading decisions.<br />
@@ -31,11 +31,11 @@ function RoadmapContent() {
             📄   
           </p>
           <a 
-            href='https://docs.google.com/presentation/d/1fRBrMuBbPZD8f-t_RIfGbso2_2fcnQ85XFUhXNwFqcs/edit?pli=1#slide=id.p2'
+            href='chrome-extension://hmigninkgibhdckiaphhmbgcghochdjc/pdfjs/web/viewer.html?file=file%3A%2F%2F%2FE%3A%2FMy%2520task%2FArial%2Fcommune-scanner%2Ffrontend%2Fpublic%2FIronBlock_Trading_Whitepaper.pdf'
             target='_blink'
           >
             <p className='text-slate-400'>
-              Comscanner Whitepaper version 0.0.0
+              IronBlock Trading Whitepaper version 0.0.0
             </p>
           </a>
           <p>
@@ -117,7 +117,7 @@ function RoadmapContent() {
           </li>
           <li>
             Unlock premium functionalities by connecting your wallet and holding <br />
-            a minimum of 1000 COMAI or WCOMAI tokens.
+            a minimum of 1000 XXX token.
           </li>
         </ul>
         <div className="alert mt-4 alert-success shadow-lg">
@@ -126,7 +126,7 @@ function RoadmapContent() {
               <span className='font-bold'>
                 Note
               </span>
-              : Please read guideline.There are ways to hold your comai tokens or wcomai tokens.
+              : Please read guideline.There are ways to hold your XXX token.
             </span>
           </div>
         </div>
@@ -142,7 +142,7 @@ function RoadmapContent() {
             Connect your wallet to access advanced features and exclusive insights.
           </li>
           <li>
-            Ensure you hold at least 1000 COMAI or WCOMAI tokens in your wallet to <br/>
+            Ensure you hold at least 1000 XXX token in your wallet to <br/>
             unlock premium functionalities.
           </li>
         </ul>
@@ -168,14 +168,14 @@ function RoadmapContent() {
             We are committed to enhancing our platform continuously based on user feedback and market trends.
           </li>
           <li>
-            Your feedback is invaluable in shaping the future of Comscanner.
+            Your feedback is invaluable in shaping the future of IronBlock Trading.
           </li>
         </ul>
 
         {/* Ready to Trade Smarter? */}
         <h2 id="getstarted8">Ready to Trade Smarter?</h2>
         <p>
-          Join Comscanner server today and take your cryptocurrency trading to the next level.<br/>
+          Join IronBlock server today and take your cryptocurrency trading to the next level.<br/>
           Sign up now to access real-time signals, predictive insights, and exclusive features. <br/>
           Start making smarter trading decisions today!
         </p>
